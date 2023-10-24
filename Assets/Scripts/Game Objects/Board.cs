@@ -8,6 +8,21 @@ public class Board : ScriptableObject
     [Header("Data")]
     public Card[,] cards;
 
+    private string[] randomWords = new string[]
+    {
+        "apple", "banana", "car", "dog", "elephant", "flower", "guitar", "house", "island", "jacket",
+        "kite", "lion", "mountain", "notebook", "ocean", "piano", "queen", "river", "sun", "tree",
+        "umbrella", "volcano", "whale", "xylophone", "yacht", "zebra",
+        "chair", "computer", "desk", "earth", "fire", "globe", "hat", "ice", "juice", "key",
+        "lemon", "moon", "net", "orange", "penguin", "quilt", "robot", "shoe", "table", "umbrella",
+        "violin", "water", "xylophone", "yogurt", "zeppelin", "octopus", "butterfly", "airplane", "camera", "diamond",
+        "eggplant", "fountain", "giraffe", "hammer", "igloo", "jellyfish", "kangaroo", "lighthouse", "mushroom", "narwhal",
+        "ostrich", "polar bear", "quokka", "rhinoceros", "saxophone", "tiger", "umbrella", "vampire", "walrus", "xylophone",
+        "yeti", "zeppelin", "apple", "banana", "car", "dog", "elephant", "flower", "guitar", "house", "island",
+        "kite", "lion", "mountain", "notebook", "ocean", "piano", "queen", "river", "sun", "tree",
+        "umbrella", "volcano", "whale", "xylophone", "yacht", "zebra"
+    };
+
     public void Initialize(int width, int height, int numRed, int numBlue, int numBlack)
     {
         name = "Game Board";
@@ -34,7 +49,8 @@ public class Board : ScriptableObject
             Vector2Int position = allPositions[index];
 
             var card = CreateInstance<Card>();
-            card.Initialize($"Word [{position.x}, {position.y}]", CardType.Red);
+            var word = randomWords[Random.Range(0, randomWords.Length)];
+            card.Initialize(word, CardType.Red);
 
             cards[position.x, position.y] = card;
 
@@ -51,7 +67,8 @@ public class Board : ScriptableObject
             Vector2Int position = allPositions[index];
 
             var card = CreateInstance<Card>();
-            card.Initialize($"Word [{position.x}, {position.y}]", CardType.Blue);
+            var word = randomWords[Random.Range(0, randomWords.Length)];
+            card.Initialize(word, CardType.Blue);
 
             cards[position.x, position.y] = card;
 
@@ -68,7 +85,8 @@ public class Board : ScriptableObject
             Vector2Int position = allPositions[index];
 
             var card = CreateInstance<Card>();
-            card.Initialize($"Word [{position.x}, {position.y}]", CardType.Black);
+            var word = randomWords[Random.Range(0, randomWords.Length)];
+            card.Initialize(word, CardType.Black);
 
             cards[position.x, position.y] = card;
 
@@ -79,7 +97,8 @@ public class Board : ScriptableObject
         foreach (var position in allPositions)
         {
             var card = CreateInstance<Card>();
-            card.Initialize($"Word [{position.x}, {position.y}]", CardType.Neutral);
+            var word = randomWords[Random.Range(0, randomWords.Length)];
+            card.Initialize(word, CardType.Neutral);
 
             cards[position.x, position.y] = card;
         }

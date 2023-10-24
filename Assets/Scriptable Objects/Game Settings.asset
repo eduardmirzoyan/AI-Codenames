@@ -18,5 +18,5 @@ MonoBehaviour:
   numBlue: 5
   numBlack: 1
   delayTime: 0.5
-  thinkTime: 1
-  guessTime: 1
+  thinkTime: 3
+  guessTime: 3

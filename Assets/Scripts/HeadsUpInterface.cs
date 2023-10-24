@@ -10,25 +10,24 @@ public class HeadsUpInterface : MonoBehaviour
 
     private void Start()
     {
-        GameEvents.instance.onThinkStart += OnTurnStart;
+        GameEvents.instance.onThinkStart += OnThinkStart;
+        GameEvents.instance.onGuessStart += OnGuessStart;
     }
 
     private void OnDestroy()
     {
-        GameEvents.instance.onThinkStart -= OnTurnStart;
+        GameEvents.instance.onThinkStart -= OnThinkStart;
+        GameEvents.instance.onGuessStart -= OnGuessStart;
     }
 
-    private void OnTurnStart(Team team)
+    private void OnThinkStart(Team team)
     {
-        switch (team.turn)
-        {
-            case Turn.Red:
-                gameStateLabel.text = "Red Turn";
-                break;
-            case Turn.Blue:
-                gameStateLabel.text = "Blue Turn";
-                break;
-        }
+        gameStateLabel.text = $"{team.cardType} Team: Give Clue";
+    }
+
+    private void OnGuessStart(Team team)
+    {
+        gameStateLabel.text = $"{team.cardType} Team: Guess";
     }
 }
 

@@ -6,46 +6,37 @@ public enum Turn { Red, Blue }
 
 public class Game : ScriptableObject
 {
-    public Team[] teams;
+    public GameSettings settings;
+    public Team blueTeam;
+    public Team redTeam;
     public Board board;
-    public Turn turn;
-    public int teamIndex;
 
+    public bool isRedTurn;
     public Team currentTeam
     {
         get
         {
-            return teams[teamIndex];
+            return isRedTurn ? redTeam : blueTeam;
         }
     }
 
     public void Initialize(GameSettings gameSettings)
     {
-        int teamSize = System.Enum.GetValues(typeof(Turn)).Length;
-        teams = new Team[teamSize];
+        settings = gameSettings;
 
-        for (int i = 0; i < teamSize; i++)
-        {
-            var team = new Team(turn, gameSettings.numRed);
-            teams[i] = team;
-
-            turn++;
-        }
+        redTeam = new Team(CardType.Red, gameSettings.numRed);
+        blueTeam = new Team(CardType.Blue, gameSettings.numBlue);
 
         board = CreateInstance<Board>();
         board.Initialize(gameSettings.boardWidth, gameSettings.boardHeight, gameSettings.numRed, gameSettings.numBlue, gameSettings.numBlack);
 
-        turn = Turn.Red;
-
-        teamIndex = 0;
+        isRedTurn = false;
 
         name = "Game";
     }
 
     public void IncrementTeam()
     {
-        teamIndex++;
-        if (teamIndex >= teams.Length)
-            teamIndex = 0;
+        isRedTurn = !isRedTurn;
     }
 }

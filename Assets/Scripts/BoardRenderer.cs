@@ -11,17 +11,17 @@ public class BoardRenderer : MonoBehaviour
 
     private void Start()
     {
-        GameEvents.instance.onGameStart += RenderBoard;
+        GameEvents.instance.onGameInitialize += RenderBoard;
     }
 
     private void OnDestroy()
     {
-        GameEvents.instance.onGameStart -= RenderBoard;
+        GameEvents.instance.onGameInitialize -= RenderBoard;
     }
 
-    private void RenderBoard(Board board)
+    private void RenderBoard(Game game)
     {
-        foreach (var card in board.cards)
+        foreach (var card in game.board.cards)
         {
             Instantiate(cardPrefab, gridLayout.transform).GetComponent<CardRenderer>().Initialize(card);
         }

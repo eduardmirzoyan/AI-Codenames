@@ -5,14 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class Team
 {
-    public Turn turn;
+    public CardType cardType;
     public int numCardsLeft;
     public int numGuesses;
     public int numLeftover;
 
-    public Team(Turn turn, int numCards)
+    public Team(CardType cardType, int numCards)
     {
-        this.turn = turn;
+        this.cardType = cardType;
         numCardsLeft = numCards;
         numGuesses = 0;
         numLeftover = 0;

@@ -6,11 +6,13 @@ using UnityEngine;
 public class GameEvents : MonoBehaviour
 {
     public Action<Game> onGameInitialize;
-    public Action<Board> onGameStart;
     public Action<Team> onThinkStart;
     public Action<Team> onThinkStop;
     public Action<Team> onGuessStart;
     public Action<Team> onGuessStop;
+
+    public Action onGiveClue;
+    public Action onGuessWord;
 
 
     public static GameEvents instance;
@@ -30,14 +32,6 @@ public class GameEvents : MonoBehaviour
         if (onGameInitialize != null)
         {
             onGameInitialize(game);
-        }
-    }
-
-    public void TriggerOnGameStart(Board board)
-    {
-        if (onGameStart != null)
-        {
-            onGameStart(board);
         }
     }
 
@@ -70,6 +64,22 @@ public class GameEvents : MonoBehaviour
         if (onGuessStop != null)
         {
             onGuessStop(team);
+        }
+    }
+
+    public void TriggerOnGiveClue()
+    {
+        if (onGiveClue != null)
+        {
+            onGiveClue();
+        }
+    }
+
+    public void TriggerOnGuessWord()
+    {
+        if (onGuessWord != null)
+        {
+            onGuessWord();
         }
     }
 }

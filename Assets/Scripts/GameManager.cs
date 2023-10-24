@@ -6,6 +6,10 @@ public class GameManager : MonoBehaviour
 {
     [Header("Data")]
     [SerializeField] private GameSettings gameSettings;
+    public Color neutralColor;
+    public Color redColor;
+    public Color blueColor;
+    public Color blackColor;
 
     [Header("Debug")]
     [SerializeField] private Game game;
@@ -27,13 +31,15 @@ public class GameManager : MonoBehaviour
         game = ScriptableObject.CreateInstance<Game>();
         game.Initialize(gameSettings);
 
-        GameEvents.instance.TriggerOnGameStart(game.board);
-
         StartCoroutine(DelayStart());
     }
 
     private IEnumerator DelayStart()
     {
+        yield return null;
+
+        GameEvents.instance.TriggerOnGameIntialize(game);
+
         print("Start Delay");
 
         yield return new WaitForSeconds(gameSettings.delayTime);
@@ -49,7 +55,10 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(gameSettings.thinkTime);
 
-        yield return StopThinking();
+        // Testing
+        Clue(Random.Range(0, 10));
+
+        // yield return StopThinking();
     }
 
     private IEnumerator StopThinking()
@@ -58,7 +67,7 @@ public class GameManager : MonoBehaviour
 
         GameEvents.instance.TriggerOnThinkStop(game.currentTeam);
 
-        yield return new WaitForSeconds(gameSettings.thinkTime);
+        yield return null;
 
         yield return StartGuessing();
     }
@@ -80,7 +89,7 @@ public class GameManager : MonoBehaviour
 
         GameEvents.instance.TriggerOnGuessStop(game.currentTeam);
 
-        yield return new WaitForSeconds(gameSettings.guessTime);
+        yield return null;
 
         game.IncrementTeam();
 
@@ -91,8 +100,10 @@ public class GameManager : MonoBehaviour
     {
         game.currentTeam.numGuesses = count;
 
+        GameEvents.instance.TriggerOnGiveClue();
+
         StopAllCoroutines();
-        StartCoroutine(StartGuessing());
+        StartCoroutine(StopThinking());
     }
 
     public void Guess(Vector2Int position)
@@ -108,7 +119,9 @@ public class GameManager : MonoBehaviour
             game.currentTeam.numGuesses = 0;
 
             StopAllCoroutines();
-            StartCoroutine(StartThinking());
+            StartCoroutine(StopGuessing());
         }
+
+        GameEvents.instance.TriggerOnGuessWord();
     }
 }
