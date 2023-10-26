@@ -8,11 +8,13 @@ public class Card : ScriptableObject
 {
     public string word;
     public CardType type;
+    public Vector2Int position;
 
-    public void Initialize(string word, CardType type)
+    public void Initialize(string word, CardType type, Vector2Int position)
     {
         this.word = word;
         this.type = type;
+        this.position = position;
 
         name = $"{word} Card";
     }

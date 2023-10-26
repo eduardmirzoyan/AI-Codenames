@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.XR;
 
 public class TeamRenderer : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class TeamRenderer : MonoBehaviour
         GameEvents.instance.onGameInitialize += Initialize;
         GameEvents.instance.onThinkStart += OnThinkStart;
         GameEvents.instance.onGuessStart += OnGuessStart;
+        GameEvents.instance.onGuessWord += OnGuess;
     }
 
     private void OnDestroy()
@@ -28,6 +30,7 @@ public class TeamRenderer : MonoBehaviour
         GameEvents.instance.onGameInitialize -= Initialize;
         GameEvents.instance.onThinkStart -= OnThinkStart;
         GameEvents.instance.onGuessStart -= OnGuessStart;
+        GameEvents.instance.onGuessWord += OnGuess;
     }
 
     public void Initialize(Game game)
@@ -48,20 +51,46 @@ public class TeamRenderer : MonoBehaviour
         }
     }
 
-    private void OnThinkStart(Team team)
+    private void OnThinkStart()
     {
         guessesLabel.text = "--";
     }
 
-    private void OnGuessStart(Team team)
+    private void OnGuessStart()
     {
-        if (this.team == team)
+        if (game.currentTeam == team)
         {
-            guessesLabel.text = "" + team.numGuesses;
+            if (game.currentTeam.numGuesses == -1)
+            {
+                guessesLabel.text = "INF (-1)";
+
+            }
+            else if (game.currentTeam.numGuesses == 0)
+            {
+                guessesLabel.text = "INF (0)";
+            }
+            else
+            {
+                guessesLabel.text = "" + team.numGuesses;
+            }
         }
         else
         {
             guessesLabel.text = "--";
+        }
+    }
+
+    private void OnGuess()
+    {
+        if (teamColor == game.redTeam.color)
+        {
+            guessesLabel.text = "" + game.redTeam.numGuesses;
+            wordsLeftLabel.text = "" + game.redTeam.numCardsLeft;
+        }
+        else
+        {
+            guessesLabel.text = "" + game.blueTeam.numGuesses;
+            wordsLeftLabel.text = "" + game.blueTeam.numCardsLeft;
         }
     }
 }

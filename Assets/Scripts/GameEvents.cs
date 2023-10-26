@@ -6,14 +6,20 @@ using UnityEngine;
 public class GameEvents : MonoBehaviour
 {
     public Action<Game> onGameInitialize;
-    public Action<Team> onThinkStart;
-    public Action<Team> onThinkStop;
-    public Action<Team> onGuessStart;
-    public Action<Team> onGuessStop;
+
+    public Action onViewStart;
+    public Action onViewStop;
+
+    public Action onThinkStart;
+    public Action onThinkStop;
+
+    public Action onGuessStart;
+    public Action onGuessStop;
 
     public Action onGiveClue;
     public Action onGuessWord;
 
+    public Action onGameOver;
 
     public static GameEvents instance;
     private void Awake()
@@ -35,35 +41,51 @@ public class GameEvents : MonoBehaviour
         }
     }
 
-    public void TriggerOnThinkStart(Team team)
+    public void TriggerOnViewStart()
+    {
+        if (onViewStart != null)
+        {
+            onViewStart();
+        }
+    }
+
+    public void TriggerOnViewStop()
+    {
+        if (onViewStop != null)
+        {
+            onViewStop();
+        }
+    }
+
+    public void TriggerOnThinkStart()
     {
         if (onThinkStart != null)
         {
-            onThinkStart(team);
+            onThinkStart();
         }
     }
 
-    public void TriggerOnThinkStop(Team team)
+    public void TriggerOnThinkStop()
     {
         if (onThinkStop != null)
         {
-            onThinkStop(team);
+            onThinkStop();
         }
     }
 
-    public void TriggerOnGuessStart(Team team)
+    public void TriggerOnGuessStart()
     {
         if (onGuessStart != null)
         {
-            onGuessStart(team);
+            onGuessStart();
         }
     }
 
-    public void TriggerOnGuessStop(Team team)
+    public void TriggerOnGuessStop()
     {
         if (onGuessStop != null)
         {
-            onGuessStop(team);
+            onGuessStop();
         }
     }
 
@@ -80,6 +102,14 @@ public class GameEvents : MonoBehaviour
         if (onGuessWord != null)
         {
             onGuessWord();
+        }
+    }
+
+    public void TriggerOnGameOver()
+    {
+        if (onGameOver != null)
+        {
+            onGameOver();
         }
     }
 }

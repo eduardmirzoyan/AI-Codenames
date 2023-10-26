@@ -11,7 +11,9 @@ public class GameSettings : ScriptableObject
     public int numBlue;
     public int numBlack;
 
-    public float delayTime;
+    public float viewTime;
     public float thinkTime;
     public float guessTime;
+
+    public bool isStrict;
 }

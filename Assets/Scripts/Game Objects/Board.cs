@@ -50,7 +50,7 @@ public class Board : ScriptableObject
 
             var card = CreateInstance<Card>();
             var word = randomWords[Random.Range(0, randomWords.Length)];
-            card.Initialize(word, CardType.Red);
+            card.Initialize(word, CardType.Red, position);
 
             cards[position.x, position.y] = card;
 
@@ -68,7 +68,7 @@ public class Board : ScriptableObject
 
             var card = CreateInstance<Card>();
             var word = randomWords[Random.Range(0, randomWords.Length)];
-            card.Initialize(word, CardType.Blue);
+            card.Initialize(word, CardType.Blue, position);
 
             cards[position.x, position.y] = card;
 
@@ -86,7 +86,7 @@ public class Board : ScriptableObject
 
             var card = CreateInstance<Card>();
             var word = randomWords[Random.Range(0, randomWords.Length)];
-            card.Initialize(word, CardType.Black);
+            card.Initialize(word, CardType.Black, position);
 
             cards[position.x, position.y] = card;
 
@@ -98,7 +98,7 @@ public class Board : ScriptableObject
         {
             var card = CreateInstance<Card>();
             var word = randomWords[Random.Range(0, randomWords.Length)];
-            card.Initialize(word, CardType.Neutral);
+            card.Initialize(word, CardType.Neutral, position);
 
             cards[position.x, position.y] = card;
         }

@@ -19,6 +19,13 @@ public class Game : ScriptableObject
             return isRedTurn ? redTeam : blueTeam;
         }
     }
+    public Team otherTeam
+    {
+        get
+        {
+            return isRedTurn ? blueTeam : redTeam;
+        }
+    }
 
     public void Initialize(GameSettings gameSettings)
     {

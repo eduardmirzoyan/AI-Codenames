@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 public class CardRenderer : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
@@ -13,6 +12,7 @@ public class CardRenderer : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private Image image;
     [SerializeField] private Outline outline;
+    [SerializeField] private Image debugImage;
 
     [Header("Settings")]
     [SerializeField] private float flipDuration;
@@ -36,19 +36,21 @@ public class CardRenderer : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (debugMode)
         {
+            debugImage.enabled = true;
+
             switch (card.type)
             {
                 case CardType.Neutral:
-                    wordLabel.color = neutralColor;
+                    debugImage.color = neutralColor;
                     break;
                 case CardType.Red:
-                    wordLabel.color = redColor;
+                    debugImage.color = redColor;
                     break;
                 case CardType.Blue:
-                    wordLabel.color = blueColor;
+                    debugImage.color = blueColor;
                     break;
                 case CardType.Black:
-                    wordLabel.color = blackColor;
+                    debugImage.color = blackColor;
                     break;
             }
         }
@@ -56,8 +58,33 @@ public class CardRenderer : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         gameObject.name = card.name;
     }
 
+    private void Start()
+    {
+        GameEvents.instance.onViewStart += OnViewStart;
+        GameEvents.instance.onViewStop += OnViewStop;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.instance.onViewStart -= OnViewStart;
+        GameEvents.instance.onViewStop -= OnViewStop;
+    }
+
+    private void OnViewStart()
+    {
+        StartCoroutine(FlipOverTime());
+    }
+
+    private void OnViewStop()
+    {
+        StartCoroutine(FlipOverTime());
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
+        // Select this card in Game Manager
+        GameManager.instance.Guess(card.position);
+
         StartCoroutine(FlipOverTime());
     }
 
@@ -124,7 +151,5 @@ public class CardRenderer : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         isRevealed = !isRevealed;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
-
-        // Select this card in Game Manager
     }
 }

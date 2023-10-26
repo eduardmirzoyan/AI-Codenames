@@ -7,27 +7,58 @@ public class HeadsUpInterface : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private TextMeshProUGUI gameStateLabel;
+    [SerializeField] private Game game;
 
     private void Start()
     {
+        GameEvents.instance.onGameInitialize += Initialize;
+
+        GameEvents.instance.onViewStop += OnViewStart;
         GameEvents.instance.onThinkStart += OnThinkStart;
         GameEvents.instance.onGuessStart += OnGuessStart;
+        GameEvents.instance.onGameOver += OnGameOver;
     }
 
     private void OnDestroy()
     {
+        GameEvents.instance.onGameInitialize -= Initialize;
+
+        GameEvents.instance.onViewStop -= OnViewStart;
         GameEvents.instance.onThinkStart -= OnThinkStart;
         GameEvents.instance.onGuessStart -= OnGuessStart;
+        GameEvents.instance.onGameOver -= OnGameOver;
     }
 
-    private void OnThinkStart(Team team)
+    private void Initialize(Game game)
     {
-        gameStateLabel.text = $"{team.cardType} Team: Give Clue";
+        this.game = game;
     }
 
-    private void OnGuessStart(Team team)
+    private void OnViewStart()
     {
-        gameStateLabel.text = $"{team.cardType} Team: Guess";
+        gameStateLabel.text = $"View Words...";
+    }
+
+    private void OnThinkStart()
+    {
+        gameStateLabel.text = $"{game.currentTeam.color} Team: Give Clue";
+    }
+
+    private void OnGuessStart()
+    {
+        gameStateLabel.text = $"{game.currentTeam.color} Team: Guess";
+    }
+
+    private void OnGameOver()
+    {
+        if (game.redTeam.numCardsLeft == 0)
+        {
+            gameStateLabel.text = "RED Wins!";
+        }
+        else
+        {
+            gameStateLabel.text = "BLUE Wins!";
+        }
     }
 }
 

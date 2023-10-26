@@ -354,7 +354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: --
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1852,6 +1852,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 793914582}
   m_CullTransparentMesh: 1
+--- !u!1 &825052067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825052068}
+  m_Layer: 5
+  m_Name: Game Win Window
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &825052068
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825052067}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1472937507}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -25}
+  m_SizeDelta: {x: 1420, y: 930}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &856529161
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,6 +1974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 882060761}
   - component: {fileID: 882060762}
+  - component: {fileID: 882060763}
   m_Layer: 5
   m_Name: Window
   m_TagString: Untagged
@@ -1990,6 +2027,18 @@ MonoBehaviour:
   m_Spacing: {x: 25, y: 25}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!225 &882060763
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882060760}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &948381328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2084,7 +2133,7 @@ MonoBehaviour:
   teamColor: 1
   game: {fileID: 0}
   team:
-    cardType: 0
+    color: 0
     numCardsLeft: 0
     numGuesses: 0
     numLeftover: 0
@@ -2657,6 +2706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ffb8c7a9db1a1459f09fccbb35dff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 882060763}
   gridLayout: {fileID: 882060762}
   cardPrefab: {fileID: 1012006111544314942, guid: 19fd8f2490ed891468fa96761f18e265, type: 3}
 --- !u!1 &1189648117
@@ -3161,7 +3211,7 @@ MonoBehaviour:
   teamColor: 2
   game: {fileID: 0}
   team:
-    cardType: 0
+    color: 0
     numCardsLeft: 0
     numGuesses: 0
     numLeftover: 0
@@ -3263,6 +3313,7 @@ RectTransform:
   - {fileID: 1451521347}
   - {fileID: 995888504}
   - {fileID: 1889558787}
+  - {fileID: 825052068}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3749,6 +3800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStateLabel: {fileID: 484977817}
+  game: {fileID: 0}
 --- !u!1 &1593135748
 GameObject:
   m_ObjectHideFlags: 0

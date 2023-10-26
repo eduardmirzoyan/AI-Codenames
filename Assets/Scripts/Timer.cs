@@ -21,16 +21,34 @@ public class Timer : MonoBehaviour
     {
         // Sub
         GameEvents.instance.onGameInitialize += Initialize;
-        GameEvents.instance.onThinkStart += StarTimerThink;
-        GameEvents.instance.onGuessStart += StarTimerGuess;
+
+        GameEvents.instance.onViewStart += OnViewStart;
+        GameEvents.instance.onThinkStart += StartTimerThink;
+        GameEvents.instance.onThinkStop += StopTimerThink;
+        GameEvents.instance.onGuessStart += StartTimerGuess;
+        GameEvents.instance.onGuessStop += StopTimerGuess;
+        GameEvents.instance.onGameOver += OnGameOver;
     }
 
     private void OnDestroy()
     {
-        // Sub
+        // Unsub
         GameEvents.instance.onGameInitialize -= Initialize;
-        GameEvents.instance.onThinkStart -= StarTimerThink;
-        GameEvents.instance.onGuessStart -= StarTimerGuess;
+
+        GameEvents.instance.onViewStart -= OnViewStart;
+        GameEvents.instance.onThinkStart -= StartTimerThink;
+        GameEvents.instance.onThinkStop -= StopTimerThink;
+        GameEvents.instance.onGuessStart -= StartTimerGuess;
+        GameEvents.instance.onGuessStop -= StopTimerGuess;
+        GameEvents.instance.onGameOver -= OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        StopAllCoroutines();
+        fillImage.fillAmount = 1f;
+        fillImage.color = startColor;
+        timeLabel.text = "--";
     }
 
     private void Initialize(Game game)
@@ -38,16 +56,34 @@ public class Timer : MonoBehaviour
         this.game = game;
     }
 
-    private void StarTimerThink(Team team)
+    private void OnViewStart()
+    {
+        StopAllCoroutines();
+        StartCoroutine(UpdateBarOverTime(game.settings.viewTime));
+    }
+
+    private void StartTimerThink()
     {
         StopAllCoroutines();
         StartCoroutine(UpdateBarOverTime(game.settings.thinkTime));
     }
 
-    private void StarTimerGuess(Team team)
+    private void StopTimerThink()
+    {
+        StopAllCoroutines();
+        fillImage.fillAmount = 0f;
+    }
+
+    private void StartTimerGuess()
     {
         StopAllCoroutines();
         StartCoroutine(UpdateBarOverTime(game.settings.guessTime));
+    }
+
+    private void StopTimerGuess()
+    {
+        StopAllCoroutines();
+        fillImage.fillAmount = 0f;
     }
 
     private IEnumerator UpdateBarOverTime(float duration)
